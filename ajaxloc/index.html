@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Example</title>
+</head>
+<body>
+    <form name="myForm">
+        <p>
+        <input type="text" name="token" placeholder="Enter please your token">
+        </p>
+        <p>
+        <select name="action">
+            <option value="getCars">Список автомобилей</option>
+            <option value="getCountries">Список стран</option>
+            <option value="getPlayers">Список игроков</option>
+            <option value="getDrugs">Список наркотиков</option>
+        </select>
+        </p>
+        <p>
+        <input type="submit" name="send" value="Отправить">
+        </p>
+    </form>
+<script>
+    document.forms["myForm"].send.addEventListener('click', ()=> {
+        let token = document.myForm.token.value;
+        let action = document.myForm.action.value;
+        // XMLHttpRequest - built-in object in ajax
+        // Create Object
+        // 1.
+        let xhr = new XMLHttpRequest();
+
+        // Configuration
+        // 2.
+        xhr.open('GET', `client_api.php?token=${token}&action=${action}`, true);
+
+        // Send from client to server
+        //3
+        xhr.send();
+
+        // Event change state request
+        xhr.onreadystatechange = () => {
+            if(xhr.readyState !== 4 )
+                return;
+            if(xhr.status !== 200)
+                console.log(`${xhr.status}: ${xhr.statusText}`);
+            else alert(xhr.responseText);
+        }
+    });
+</script>
+</body>
+</html>
